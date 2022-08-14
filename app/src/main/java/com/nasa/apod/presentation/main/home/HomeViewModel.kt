@@ -19,8 +19,8 @@ class HomeMainViewModel @Inject constructor(private val getAllMediasUseCase: Get
     private val state = MutableStateFlow<HomeMainFragmentState>(HomeMainFragmentState.Init)
     val mState: StateFlow<HomeMainFragmentState> get() = state
 
-    private val imageList = MutableStateFlow<List<MediaEntity>>(mutableListOf())
-    val mMediaList: StateFlow<List<MediaEntity>> get() = imageList
+    private val mediaList = MutableStateFlow<List<MediaEntity>>(mutableListOf())
+    val mMediaList: StateFlow<List<MediaEntity>> get() = mediaList
 
     init {
         fetchAllMedias()
@@ -52,7 +52,7 @@ class HomeMainViewModel @Inject constructor(private val getAllMediasUseCase: Get
                     hideLoading()
                     when (result) {
                         is BaseResult.Success -> {
-                            imageList.value = result.data
+                            mediaList.value = result.data
                         }
                         is BaseResult.Error -> {
                             showToast(result.rawResponse.message)

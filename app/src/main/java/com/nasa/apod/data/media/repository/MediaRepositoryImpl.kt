@@ -6,6 +6,7 @@ import com.nasa.apod.R
 import com.nasa.apod.data.media.remote.api.MediaApi
 import com.nasa.apod.data.media.remote.dto.MediasList
 import com.nasa.apod.data.utils.JsonParserHelper
+import com.nasa.apod.data.utils.MediaUtils
 import com.nasa.apod.data.utils.WrappedListResponse
 import com.nasa.apod.domain.common.base.BaseResult
 import com.nasa.apod.domain.media.MediaRepository
@@ -26,9 +27,10 @@ class MediaRepositoryImpl @Inject constructor(
             )
 
             if (parsedJson.isNullOrEmpty().not()) {
-                val imageList = Gson().fromJson(parsedJson, MediasList::class.java)
+                val data = Gson().fromJson(parsedJson, MediasList::class.java)
+                val sortedMediaList = MediaUtils().sortedMediaByLatestDate(data)
                 val imageEntityList = mutableListOf<MediaEntity>()
-                imageList?.forEach { listItem ->
+                sortedMediaList.forEach { listItem ->
                     imageEntityList.add(
                         MediaEntity(
                             copyright = listItem.copyright,
