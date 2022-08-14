@@ -1,44 +1,46 @@
 package com.nasa.apod.presentation.main.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nasa.apod.domain.common.base.BaseResult
-import com.nasa.apod.domain.product.entity.ProductEntity
-import com.nasa.apod.domain.product.usecase.GetAllMyProductUseCase
+import com.nasa.apod.domain.media.entity.MediaEntity
+import com.nasa.apod.domain.media.usecase.GetAllMediasUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeMainViewModel @Inject constructor(private val getAllMyProductUseCase: GetAllMyProductUseCase) : ViewModel(){
+class HomeMainViewModel @Inject constructor(private val getAllMediasUseCase: GetAllMediasUseCase) :
+    ViewModel() {
     private val state = MutableStateFlow<HomeMainFragmentState>(HomeMainFragmentState.Init)
     val mState: StateFlow<HomeMainFragmentState> get() = state
 
-    private val products = MutableStateFlow<List<ProductEntity>>(mutableListOf())
-    val mProducts: StateFlow<List<ProductEntity>> get() = products
+    private val imageList = MutableStateFlow<List<MediaEntity>>(mutableListOf())
+    val mMediaList: StateFlow<List<MediaEntity>> get() = imageList
 
     init {
-        fetchAllMyProducts()
+        fetchAllMedias()
     }
 
-
-    private fun setLoading(){
+    private fun setLoading() {
         state.value = HomeMainFragmentState.IsLoading(true)
     }
 
-    private fun hideLoading(){
+    private fun hideLoading() {
         state.value = HomeMainFragmentState.IsLoading(false)
     }
 
-    private fun showToast(message: String){
+    private fun showToast(message: String) {
         state.value = HomeMainFragmentState.ShowToast(message)
     }
 
-    fun fetchAllMyProducts(){
+    fun fetchAllMedias() {
         viewModelScope.launch {
-            getAllMyProductUseCase.invoke()
+            getAllMediasUseCase.invoke()
                 .onStart {
                     setLoading()
                 }
@@ -48,9 +50,9 @@ class HomeMainViewModel @Inject constructor(private val getAllMyProductUseCase: 
                 }
                 .collect { result ->
                     hideLoading()
-                    when(result){
+                    when (result) {
                         is BaseResult.Success -> {
-                            products.value = result.data
+                            imageList.value = result.data
                         }
                         is BaseResult.Error -> {
                             showToast(result.rawResponse.message)
@@ -65,5 +67,5 @@ class HomeMainViewModel @Inject constructor(private val getAllMyProductUseCase: 
 sealed class HomeMainFragmentState {
     object Init : HomeMainFragmentState()
     data class IsLoading(val isLoading: Boolean) : HomeMainFragmentState()
-    data class ShowToast(val message : String) : HomeMainFragmentState()
+    data class ShowToast(val message: String) : HomeMainFragmentState()
 }

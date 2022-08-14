@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.main.home.HomeMainFragment">
+    tools:context=".presentation.main.home.HomeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/products_recycler_view"
+        android:id="@+id/medias_recycler_view"
         android:layout_width="match_parent"
-        tools:listitem="@layout/item_product"
+        tools:listitem="@layout/item_media"
         android:layout_height="match_parent"/>
     <ProgressBar
         android:visibility="gone"

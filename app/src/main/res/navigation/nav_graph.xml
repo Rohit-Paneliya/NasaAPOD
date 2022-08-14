@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/HomeMainFragment"
-        android:name="com.nasa.apod.presentation.main.home.HomeMainFragment"
+        android:name="com.nasa.apod.presentation.main.home.HomeFragment"
         android:label="@string/main_fragment_home"
-        tools:layout="@layout/fragment_main_home"/>
+        tools:layout="@layout/fragment_home"/>
 
 </navigation>
