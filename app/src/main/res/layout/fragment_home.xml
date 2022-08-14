@@ -31,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:fontFamily="@font/tisa_sans_pro_regular"
         android:text="@string/no_data_available"
         android:textColor="@color/light_grey"
         android:textSize="@dimen/textsize_large"

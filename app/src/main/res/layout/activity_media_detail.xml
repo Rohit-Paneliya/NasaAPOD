@@ -29,6 +29,7 @@
         <TextView
             android:id="@+id/textViewDate"
             android:layout_width="0dp"
+            android:fontFamily="@font/tisa_sans_pro_regular"
             android:layout_height="wrap_content"
             android:gravity="end"
             android:paddingHorizontal="@dimen/margin_16"
@@ -41,19 +42,21 @@
             tools:text="12th August 2022" />
 
         <TextView
+            android:fontFamily="@font/tisa_sans_pro_medium"
             android:id="@+id/textViewTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/margin_16"
             android:paddingVertical="@dimen/margin_8"
             android:textColor="@color/white"
-            android:textSize="@dimen/textsize_large"
+            android:textSize="@dimen/textsize_xlarge"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewDate"
             tools:text="Starburst Galaxy M94 from Hubble" />
 
         <TextView
+            android:fontFamily="@font/tisa_sans_pro_regular"
             android:id="@+id/textViewDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -69,6 +72,7 @@
             tools:text="Is this what will become of our Sun? Quite possibly.  The first hint of our Sun's future was discovered inadvertently in 1764. At that time, Charles Messier was compiling a list of diffuse objects not to be confused with comets. The 27th object on Messier's list, now known as M27 or the Dumbbell Nebula, is a planetary nebula, the type of nebula our Sun will produce when nuclear fusion stops in its core. M27 is one of the brightest planetary nebulae on the sky, and can be seen toward the constellation of the Fox (Vulpecula) with binoculars. It takes light about 1000 years to reach us from M27, featured here in colors emitted by hydrogen and oxygen. Understanding the physics and significance of M27 was well beyond 18th century science. Even today, many things remain mysterious about bipolar planetary nebula like M27, including the physical mechanism that expels a low-mass star's gaseous outer-envelope, leaving an X-ray hot white dwarf.   APOD across world languages: Arabic, Catalan, Chinese (Beijing), Chinese (Taiwan), Croatian, Czech, Dutch, Farsi, French, French, German, Hebrew, Indonesian, Japanese, Korean, Montenegrin, Polish, Russian, Serbian, Slovenian,  Spanish and Ukrainian" />
 
         <TextView
+            android:fontFamily="@font/tisa_sans_pro_regular"
             android:id="@+id/textViewCopyRight"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -87,6 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:fontFamily="@font/tisa_sans_pro_regular"
             android:text="@string/no_data_available"
             android:textColor="@color/light_grey"
             android:textSize="@dimen/textsize_large"
