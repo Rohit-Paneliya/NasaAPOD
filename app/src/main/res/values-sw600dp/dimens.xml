@@ -1,3 +1,6 @@
 <resources>
     <integer name="home_list_span_count">5</integer>
+    <dimen name="textsize_small">14sp</dimen>
+    <dimen name="textsize_large">22sp</dimen>
+    <dimen name="textsize_medium">18sp</dimen>
 </resources>

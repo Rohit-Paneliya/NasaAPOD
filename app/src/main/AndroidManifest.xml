@@ -25,7 +25,7 @@
 
         <activity
             android:name=".presentation.main.detail.MediaDetailActivity"
-            android:theme="@style/Theme.NasaAPOD"
+            android:theme="@style/Theme.NasaAPOD.TransparentStatusBar"
             android:exported="true"/>
     </application>
 

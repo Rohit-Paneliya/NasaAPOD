@@ -84,15 +84,6 @@ class HomeFragment : Fragment(R.layout.fragment_home),
     }
 
     override fun onListItemClicked(item: Pair<MediaEntity, ImageView>) {
-//        val p1: androidx.core.util.Pair<View, String> = androidx.core.util.Pair(item.second, "imagePoster")
-//        val options: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-//            requireActivity(), p1)
-//
-//        startActivity(
-//            MediaDetailActivity.getIntent(requireActivity(), item.first),
-//            options.toBundle()
-//        )
-
         val options: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
             requireActivity(),
             item.second,
