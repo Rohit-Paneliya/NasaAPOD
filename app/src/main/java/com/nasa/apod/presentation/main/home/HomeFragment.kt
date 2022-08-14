@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.nasa.apod.R
 import com.nasa.apod.databinding.FragmentHomeBinding
 import com.nasa.apod.domain.media.entity.MediaEntity
@@ -28,26 +27,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
-        setupRecyclerView()
         observe()
         setFragmentResultListener("success_create") { requestKey, bundle ->
             if (bundle.getBoolean("success_create")) {
                 viewModel.fetchAllMedias()
             }
         }
-    }
-
-    private fun setupRecyclerView() {
-        val mAdapter = HomeMainMediaAdapter(mutableListOf())
-
-        binding.mediasRecyclerView.apply {
-            adapter = mAdapter
-            layoutManager = LinearLayoutManager(requireActivity())
-        }
-    }
-
-    private fun fetchMedias() {
-        viewModel.fetchAllMedias()
     }
 
     private fun observeState() {
@@ -74,10 +59,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun handleMedias(media: List<MediaEntity>) {
-        binding.mediasRecyclerView.adapter?.let {
-            if (it is HomeMainMediaAdapter) {
-                it.updateList(media)
-            }
+        val mAdapter = HomeMainMediaAdapter(media)
+
+        binding.mediasRecyclerView.apply {
+            adapter = mAdapter
+            setHasFixedSize(true)
         }
     }
 

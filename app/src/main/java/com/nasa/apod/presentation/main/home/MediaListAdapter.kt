@@ -3,20 +3,23 @@ package com.nasa.apod.presentation.main.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.nasa.apod.R
 import com.nasa.apod.databinding.ItemMediaBinding
 import com.nasa.apod.domain.media.entity.MediaEntity
 
-class HomeMainMediaAdapter(private val mediaList: MutableList<MediaEntity>) : RecyclerView.Adapter<HomeMainMediaAdapter.ViewHolder>(){
+class HomeMainMediaAdapter(private val mediaList: List<MediaEntity>) :
+    RecyclerView.Adapter<HomeMainMediaAdapter.ViewHolder>() {
 
-    fun updateList(mMedia: List<MediaEntity>){
-        mediaList.clear()
-        mediaList.addAll(mMedia)
-        notifyDataSetChanged()
-    }
-
-    inner class ViewHolder(private val itemBinding: ItemMediaBinding) : RecyclerView.ViewHolder(itemBinding.root){
-        fun bind(media: MediaEntity){
-            itemBinding.mediaNameTextView.text = media.title
+    inner class ViewHolder(private val itemBinding: ItemMediaBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
+        fun bind(media: MediaEntity) {
+            Glide
+                .with(itemBinding.root.context)
+                .load(media.url)
+                .error(R.drawable.placeholder_poster)
+                .placeholder(R.drawable.placeholder_poster)
+                .into(itemBinding.imageViewPoster)
         }
     }
 
@@ -25,7 +28,8 @@ class HomeMainMediaAdapter(private val mediaList: MutableList<MediaEntity>) : Re
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(mediaList[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
+        holder.bind(mediaList[position])
 
     override fun getItemCount() = mediaList.size
 }

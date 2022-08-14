@@ -1,0 +1,3 @@
+<resources>
+    <integer name="home_list_span_count">5</integer>
+</resources>
