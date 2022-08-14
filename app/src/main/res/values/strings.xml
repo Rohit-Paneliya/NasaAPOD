@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Nasa APOD</string>
+    <string name="main_fragment_home">Home</string>
+</resources>
