@@ -22,10 +22,6 @@ class HomeMainViewModel @Inject constructor(private val getAllMediasUseCase: Get
     private val mediaList = MutableStateFlow<List<MediaEntity>>(mutableListOf())
     val mMediaList: StateFlow<List<MediaEntity>> get() = mediaList
 
-    init {
-        fetchAllMedias()
-    }
-
     private fun setLoading() {
         state.value = HomeMainFragmentState.IsLoading(true)
     }
