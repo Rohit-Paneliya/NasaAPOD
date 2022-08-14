@@ -5,4 +5,5 @@
     <string name="copyright_text">© %1$s</string>
     <string name="captured_date">Captured on: %1$s</string>
     <string name="no_data_available">No data available.</string>
+    <string name="error_json_parsing">JSON Parsing Error</string>
 </resources>

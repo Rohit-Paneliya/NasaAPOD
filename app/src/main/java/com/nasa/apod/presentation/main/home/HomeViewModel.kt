@@ -22,36 +22,36 @@ class HomeMainViewModel @Inject constructor(private val getAllMediasUseCase: Get
     private val mediaList = MutableStateFlow<List<MediaEntity>>(mutableListOf())
     val mMediaList: StateFlow<List<MediaEntity>> get() = mediaList
 
-    private fun setLoading() {
-        state.value = HomeMainFragmentState.IsLoading(true)
-    }
-
-    private fun hideLoading() {
-        state.value = HomeMainFragmentState.IsLoading(false)
+    private fun setLoading(isLoading: Boolean) {
+        state.value = HomeMainFragmentState.IsLoading(isLoading)
     }
 
     private fun showToast(message: String) {
         state.value = HomeMainFragmentState.ShowToast(message)
     }
 
+    private fun showError(message: String) {
+        state.value = HomeMainFragmentState.ShowError(message)
+    }
+
     fun fetchAllMedias() {
         viewModelScope.launch {
             getAllMediasUseCase.invoke()
                 .onStart {
-                    setLoading()
+                    setLoading(true)
                 }
                 .catch { exception ->
-                    hideLoading()
+                    setLoading(false)
                     showToast(exception.message.toString())
                 }
                 .collect { result ->
-                    hideLoading()
+                    setLoading(false)
                     when (result) {
                         is BaseResult.Success -> {
                             mediaList.value = result.data
                         }
                         is BaseResult.Error -> {
-                            showToast(result.rawResponse.message)
+                            showError(result.rawResponse.message)
                         }
                     }
                 }
@@ -64,4 +64,5 @@ sealed class HomeMainFragmentState {
     object Init : HomeMainFragmentState()
     data class IsLoading(val isLoading: Boolean) : HomeMainFragmentState()
     data class ShowToast(val message: String) : HomeMainFragmentState()
+    data class ShowError(val message: String) : HomeMainFragmentState()
 }

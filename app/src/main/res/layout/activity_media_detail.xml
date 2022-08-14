@@ -90,7 +90,11 @@
             android:text="@string/no_data_available"
             android:textColor="@color/light_grey"
             android:textSize="@dimen/textsize_large"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/viewGroup"

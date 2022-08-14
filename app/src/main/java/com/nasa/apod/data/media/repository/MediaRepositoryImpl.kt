@@ -26,30 +26,33 @@ class MediaRepositoryImpl @Inject constructor(
                 applicationContext.resources.openRawResource(R.raw.list_data)
             )
 
-            if (parsedJson.isNullOrEmpty().not()) {
-                val data = Gson().fromJson(parsedJson, MediasList::class.java)
-                val sortedMediaList = MediaUtils().sortedMediaByLatestDate(data)
-                val imageEntityList = mutableListOf<MediaEntity>()
-                sortedMediaList.forEach { listItem ->
-                    imageEntityList.add(
-                        MediaEntity(
-                            copyright = listItem.copyright,
-                            date = listItem.date,
-                            explanation = listItem.explanation,
-                            hdurl = listItem.hdurl,
-                            title = listItem.title,
-                            url = listItem.url,
+            when {
+                parsedJson.isNullOrEmpty().not() -> {
+                    val data = Gson().fromJson(parsedJson, MediasList::class.java)
+                    val sortedMediaList = MediaUtils().sortedMediaByLatestDate(data)
+                    val imageEntityList = mutableListOf<MediaEntity>()
+                    sortedMediaList.forEach { listItem ->
+                        imageEntityList.add(
+                            MediaEntity(
+                                copyright = listItem.copyright,
+                                date = listItem.date,
+                                explanation = listItem.explanation,
+                                hdurl = listItem.hdurl,
+                                title = listItem.title,
+                                url = listItem.url,
+                            )
                         )
-                    )
+                    }
+                    emit(BaseResult.Success(imageEntityList))
                 }
-                emit(BaseResult.Success(imageEntityList))
-            } else {
-                val error: WrappedListResponse<MediasList> = WrappedListResponse(
-                    code = 422, message = "Json Parsing Error", status = false,
-                    errors = arrayListOf(),
-                    data = arrayListOf()
-                )
-                emit(BaseResult.Error(error))
+                else -> {
+                    val error: WrappedListResponse<MediasList> = WrappedListResponse(
+                        code = 422, message = applicationContext.getString(R.string.error_json_parsing), status = false,
+                        errors = arrayListOf(),
+                        data = arrayListOf()
+                    )
+                    emit(BaseResult.Error(error))
+                }
             }
         }
     }

@@ -11,9 +11,13 @@ class DateTimeFormatter {
 
     fun displayDateFromSystemDate(date: String?): String {
 
-        if(TextUtils.isEmpty(date)) return "NA"
+        return when {
+            TextUtils.isEmpty(date) -> "NA"
+            else -> {
+                val systemDate = date?.let { systemDateFormatter.parse(it) }
+                systemDate?.let { displayDateFormatter.format(it) } ?: kotlin.run { "NA" }
+            }
+        }
 
-        val systemDate = date?.let { systemDateFormatter.parse(it) }
-        return systemDate?.let { displayDateFormatter.format(it) } ?: kotlin.run { "NA" }
     }
 }

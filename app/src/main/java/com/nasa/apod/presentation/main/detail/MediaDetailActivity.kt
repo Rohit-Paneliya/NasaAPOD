@@ -52,8 +52,10 @@ class MediaDetailActivity : AppCompatActivity() {
                 textViewDescription.text = selectedMedia.explanation
                 textViewDate.text = getString(R.string.captured_date,DateTimeFormatter().displayDateFromSystemDate(selectedMedia.date))
 
-                if(TextUtils.isEmpty(selectedMedia.copyright).not()){
-                    textViewCopyRight.text = getString(R.string.copyright_text,selectedMedia.copyright)
+                when {
+                    TextUtils.isEmpty(selectedMedia.copyright).not() -> {
+                        textViewCopyRight.text = getString(R.string.copyright_text,selectedMedia.copyright)
+                    }
                 }
             }
         } ?: kotlin.run {
