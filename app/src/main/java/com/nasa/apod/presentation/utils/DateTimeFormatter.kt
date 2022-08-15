@@ -1,6 +1,6 @@
 package com.nasa.apod.presentation.utils
 
-import android.text.TextUtils
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -12,10 +12,14 @@ class DateTimeFormatter {
     fun displayDateFromSystemDate(date: String?): String {
 
         return when {
-            TextUtils.isEmpty(date) -> "NA"
+            date.isNullOrBlank() -> "NA"
             else -> {
-                val systemDate = date?.let { systemDateFormatter.parse(it) }
-                systemDate?.let { displayDateFormatter.format(it) } ?: kotlin.run { "NA" }
+                try{
+                    val systemDate = date.let { systemDateFormatter.parse(it) }
+                    systemDate?.let { displayDateFormatter.format(it) } ?: kotlin.run { "NA" }
+                } catch (exception: ParseException){
+                    return "NA"
+                }
             }
         }
 
