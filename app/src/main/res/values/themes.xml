@@ -17,6 +17,15 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="SplashTheme" parent="Theme.NasaAPOD">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/background_splash</item>
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/nasa_logo</item>
+        <item name="windowSplashScreenAnimationDuration">200</item>
+    </style>
+
     <style name="Theme.NasaAPOD.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
