@@ -36,6 +36,10 @@ class MediaDetailActivity : AppCompatActivity() {
 
         val selectedMedia = intent?.getParcelableExtra<MediaEntity>(ARG_SELECTED_MEDIA)
 
+        binding.imageButtonBack.setOnClickListener {
+            super.onBackPressed()
+        }
+
         selectedMedia?.let {
             binding.apply {
                 binding.viewGroup.visibility = View.VISIBLE
