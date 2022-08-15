@@ -10,5 +10,10 @@
     <color name="color_danger">#F44336</color>
 
     <color name="light_grey">#B5B5B5</color>
-    <color name="home_screen_bg">#191919</color>
+
+    <!--Light theme colors-->
+    <color name="screen_bg">#FFFFFF</color>
+    <color name="text_color">#2E2E2E</color>
+    <color name="status_bar_color">#C8343A8E</color>
+    <color name="action_bar_color">#343A8E</color>
 </resources>
