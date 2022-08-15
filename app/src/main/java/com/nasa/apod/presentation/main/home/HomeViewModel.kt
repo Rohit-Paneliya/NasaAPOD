@@ -2,7 +2,7 @@ package com.nasa.apod.presentation.main.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nasa.apod.domain.common.base.BaseResult
+import com.nasa.apod.domain.base.BaseResult
 import com.nasa.apod.domain.media.entity.MediaEntity
 import com.nasa.apod.domain.media.usecase.GetAllMediasUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

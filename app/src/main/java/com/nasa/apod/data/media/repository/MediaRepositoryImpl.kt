@@ -8,7 +8,7 @@ import com.nasa.apod.data.media.remote.dto.MediasList
 import com.nasa.apod.data.utils.JsonParserHelper
 import com.nasa.apod.data.utils.MediaUtils
 import com.nasa.apod.data.utils.WrappedListResponse
-import com.nasa.apod.domain.common.base.BaseResult
+import com.nasa.apod.domain.base.BaseResult
 import com.nasa.apod.domain.media.MediaRepository
 import com.nasa.apod.domain.media.entity.MediaEntity
 import kotlinx.coroutines.flow.Flow
