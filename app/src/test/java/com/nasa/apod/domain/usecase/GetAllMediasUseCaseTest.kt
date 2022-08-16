@@ -1,5 +1,8 @@
 package com.nasa.apod.domain.usecase
 
+import com.nasa.apod.FakeDataGenerator.errorCode
+import com.nasa.apod.FakeDataGenerator.errorMessage
+import com.nasa.apod.FakeDataGenerator.mediaEntityList
 import com.nasa.apod.data.media.remote.dto.MediasList
 import com.nasa.apod.data.utils.WrappedListResponse
 import com.nasa.apod.domain.base.BaseResult
@@ -25,13 +28,6 @@ class GetAllMediasUseCaseTest : TestCase() {
 
     private val mediaRepository = mock(MediaRepository::class.java)
     private val getAllMediasUseCase = GetAllMediasUseCase(mediaRepository)
-    private val mediaEntityList = mutableListOf(
-        MediaEntity(title = "Test"),
-        MediaEntity(title = "Test2")
-    )
-
-    private val errorCode = 422
-    private val errorMessage = "JSON Parsing issue"
 
     @Test
     fun checkSuccessInvokeMethod() = runBlocking {
