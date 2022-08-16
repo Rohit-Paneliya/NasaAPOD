@@ -32,7 +32,7 @@ class GetAllMediasUseCaseTest : TestCase() {
     @Test
     fun checkSuccessInvokeMethod() = runBlocking {
         val list = MutableStateFlow<List<MediaEntity>>(mutableListOf())
-        `when`(getAllMediasUseCase.invoke()).thenReturn(getDummyData())
+        `when`(mediaRepository.getAllMediasList()).thenReturn(getDummyData())
         val result: Flow<BaseResult<List<MediaEntity>, WrappedListResponse<MediasList>>> = getAllMediasUseCase.invoke()
         result.collect { output ->
                 when (output) {
@@ -50,7 +50,7 @@ class GetAllMediasUseCaseTest : TestCase() {
 
         var receivedErrorCode = 0
         var receivedErrorMessage = ""
-        `when`(getAllMediasUseCase.invoke()).thenReturn(getErrorDummyData())
+        `when`(mediaRepository.getAllMediasList()).thenReturn(getErrorDummyData())
         val result: Flow<BaseResult<List<MediaEntity>, WrappedListResponse<MediasList>>> = getAllMediasUseCase.invoke()
         result.collect { output ->
             when (output) {
