@@ -1,4 +1,4 @@
-package com.nasa.apod.presentation
+package com.nasa.apod.presentation.viewmodel.utils
 
 import com.nasa.apod.presentation.utils.DateTimeFormatter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
