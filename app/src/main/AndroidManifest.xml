@@ -15,8 +15,9 @@
 
         <activity
             android:name=".presentation.main.MainActivity"
-            android:theme="@style/SplashTheme"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,8 +26,9 @@
 
         <activity
             android:name=".presentation.main.detail.MediaDetailActivity"
-            android:theme="@style/Theme.NasaAPOD.TransparentStatusBar"
-            android:exported="true"/>
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NasaAPOD.TransparentStatusBar" />
     </application>
 
 </manifest>
