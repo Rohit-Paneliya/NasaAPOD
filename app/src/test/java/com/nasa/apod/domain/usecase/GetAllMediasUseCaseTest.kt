@@ -2,6 +2,8 @@ package com.nasa.apod.domain.usecase
 
 import com.nasa.apod.FakeDataGenerator.errorCode
 import com.nasa.apod.FakeDataGenerator.errorMessage
+import com.nasa.apod.FakeDataGenerator.getDummyData
+import com.nasa.apod.FakeDataGenerator.getErrorDummyData
 import com.nasa.apod.FakeDataGenerator.mediaEntityList
 import com.nasa.apod.data.media.remote.dto.MediasList
 import com.nasa.apod.data.utils.WrappedListResponse
@@ -13,7 +15,6 @@ import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Test
@@ -62,22 +63,5 @@ class GetAllMediasUseCaseTest : TestCase() {
         }
         Assert.assertEquals(receivedErrorCode,errorCode)
         Assert.assertEquals(receivedErrorMessage,errorMessage)
-    }
-
-    private suspend fun getDummyData(): Flow<BaseResult<List<MediaEntity>, WrappedListResponse<MediasList>>> {
-        return flow {
-            emit(BaseResult.Success(mediaEntityList))
-        }
-    }
-
-    private suspend fun getErrorDummyData(): Flow<BaseResult<List<MediaEntity>, WrappedListResponse<MediasList>>> {
-        return flow {
-            val error: WrappedListResponse<MediasList> = WrappedListResponse(
-                code = errorCode, message = errorMessage,status = false,
-                errors = arrayListOf(),
-                data = arrayListOf()
-            )
-            emit(BaseResult.Error(error))
-        }
     }
 }
