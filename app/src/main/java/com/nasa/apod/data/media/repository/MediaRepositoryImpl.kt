@@ -28,11 +28,12 @@ class MediaRepositoryImpl @Inject constructor(
 
             when {
                 parsedJson.isNullOrEmpty().not() -> {
+                    val mediaEntityList = mutableListOf<MediaEntity>()
                     val data = Gson().fromJson(parsedJson, MediasList::class.java)
                     val sortedMediaList = MediaUtils().sortedMediaByLatestDate(data)
-                    val imageEntityList = mutableListOf<MediaEntity>()
+
                     sortedMediaList.forEach { listItem ->
-                        imageEntityList.add(
+                        mediaEntityList.add(
                             MediaEntity(
                                 copyright = listItem.copyright,
                                 date = listItem.date,
@@ -43,7 +44,7 @@ class MediaRepositoryImpl @Inject constructor(
                             )
                         )
                     }
-                    emit(BaseResult.Success(imageEntityList))
+                    emit(BaseResult.Success(mediaEntityList))
                 }
                 else -> {
                     val error: WrappedListResponse<MediasList> = WrappedListResponse(
