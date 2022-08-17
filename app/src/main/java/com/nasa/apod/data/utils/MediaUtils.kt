@@ -10,7 +10,11 @@ class MediaUtils {
     fun sortedMediaByLatestDate(data: MediasList): ArrayList<MediasListItem> {
         val dateTimeFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         data.sortByDescending {
-            it.date?.let { it1 -> dateTimeFormatter.parse(it1) }
+            if (it.date.isNullOrBlank()) {
+                Date()
+            } else {
+                dateTimeFormatter.parse(it.date)
+            }
         }
         return data
     }
