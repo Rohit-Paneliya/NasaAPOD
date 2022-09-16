@@ -25,7 +25,7 @@
                 android:layout_height="0dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:transitionName="imagePoster"
+                android:transitionName="@string/transition_name"
                 app:layout_constraintDimensionRatio="@string/detail_screen_poster_ratio"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

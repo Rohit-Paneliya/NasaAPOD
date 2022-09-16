@@ -6,14 +6,13 @@ import android.widget.ImageView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.nasa.apod.R
 import com.nasa.apod.databinding.FragmentHomeBinding
 import com.nasa.apod.domain.media.entity.MediaEntity
 import com.nasa.apod.presentation.interfaces.OnItemClickListener
 import com.nasa.apod.presentation.main.detail.MediaDetailActivity
+import com.nasa.apod.presentation.utils.UiStateHandler
 import com.nasa.apod.presentation.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -30,37 +29,21 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentHomeBinding.bind(view)
-        observe()
+        setObservers()
+
         viewModel.fetchAllMedias()
     }
 
-    private fun observeState() {
-        viewModel.mState
-            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.CREATED)
-            .onEach { state ->
-                handleState(state)
-            }
+    private fun setObservers() {
+        viewModel.mHandleResponse
+            .onEach { state -> handleStateAndData(state) }
             .launchIn(viewLifecycleOwner.lifecycleScope)
-    }
-
-    private fun observeMedias() {
-        viewModel.mMediaList
-            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.CREATED)
-            .onEach { medias ->
-                handleMedias(medias)
-            }
-            .launchIn(viewLifecycleOwner.lifecycleScope)
-    }
-
-    private fun observe() {
-        observeState()
-        observeMedias()
     }
 
     private fun handleMedias(media: List<MediaEntity>) {
 
         when {
-            media.isNullOrEmpty().not() -> {
+            media.isNotEmpty() -> {
                 binding.mediasRecyclerView.visibility = View.VISIBLE
                 binding.textViewErrorMessage.visibility = View.GONE
 
@@ -77,20 +60,22 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         }
     }
 
-    private fun handleState(state: HomeMainFragmentState) {
+    private fun handleStateAndData(state: UiStateHandler<List<MediaEntity>>) {
         when (state) {
-            is HomeMainFragmentState.IsLoading -> handleLoading(state.isLoading)
-            is HomeMainFragmentState.ShowToast -> requireActivity().showToast(state.message)
-            is HomeMainFragmentState.ShowError -> {
-                binding.apply {
-                    mediasRecyclerView.visibility = View.GONE
-                    loadingProgressBar.visibility = View.GONE
-                    textViewErrorMessage.visibility = View.VISIBLE
-                    textViewErrorMessage.text = state.message
-                }
+            is UiStateHandler.Loading -> handleLoading(state.isLoading)
+            is UiStateHandler.Success -> handleMedias(state.data)
+            is UiStateHandler.Error -> handleError(state)
+            is UiStateHandler.ShowMessage -> context?.showToast(state.message)
+            is UiStateHandler.Init -> Unit
+        }
+    }
 
-            }
-            is HomeMainFragmentState.Init -> Unit
+    private fun handleError(state: UiStateHandler.Error<List<MediaEntity>>) {
+        binding.apply {
+            mediasRecyclerView.visibility = View.GONE
+            loadingProgressBar.visibility = View.GONE
+            textViewErrorMessage.visibility = View.VISIBLE
+            textViewErrorMessage.text = state.message
         }
     }
 
@@ -98,6 +83,8 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         when {
             isLoading -> {
                 binding.loadingProgressBar.visibility = View.VISIBLE
+                binding.mediasRecyclerView.visibility = View.GONE
+                binding.textViewErrorMessage.visibility = View.GONE
             }
             else -> {
                 binding.loadingProgressBar.visibility = View.GONE
@@ -109,8 +96,11 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         val options: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
             requireActivity(),
             item.second,
-            "imagePoster"
+            getString(R.string.transition_name)
         )
-        startActivity(MediaDetailActivity.getIntent(requireActivity(), item.first),options.toBundle())
+        startActivity(
+            MediaDetailActivity.getIntent(requireActivity(), item.first),
+            options.toBundle()
+        )
     }
 }

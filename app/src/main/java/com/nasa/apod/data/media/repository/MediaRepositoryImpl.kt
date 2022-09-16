@@ -11,6 +11,7 @@ import com.nasa.apod.data.utils.WrappedListResponse
 import com.nasa.apod.domain.base.BaseResult
 import com.nasa.apod.domain.media.MediaRepository
 import com.nasa.apod.domain.media.entity.MediaEntity
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -21,7 +22,7 @@ class MediaRepositoryImpl @Inject constructor(
 ) : MediaRepository {
     override suspend fun getAllMediasList(): Flow<BaseResult<List<MediaEntity>, WrappedListResponse<MediasList>>> {
         return flow {
-
+            delay(2000) // delay added to fake like an API call
             val parsedJson = JsonParserHelper().inputStreamToString(
                 applicationContext.resources.openRawResource(R.raw.list_data)
             )
